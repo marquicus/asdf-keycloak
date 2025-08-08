@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+set -x
+# shellcheck source=bin/utils.sh
+source "$(dirname "$0")/utils.sh"
+
+install_keycloak() {
+  local install_type="$1"
+  local download_path="$2"
+  local install_path="$3"
+
+  if [ -z "$download_path" ]; then
+    #: We're on asdf 0.7.*
+    download_path=$(mktemp -d -t "asdf-keycloak-$install_type-$ASDF_INSTALL_VERSION-XXXX")
+    ASDF_DOWNLOAD_PATH="$download_path"
+    download_keycloak "$ASDF_INSTALL_TYPE" "$ASDF_INSTALL_VERSION" "$ASDF_DOWNLOAD_PATH"
+  fi
+
+  if [ "$install_type" = "version" ]; then
+    # move the prebuilt artifact to the install path
+    mv -f "$download_path"/** "$install_path"
+  else
+    (
+      cd "$download_path" || exit 1
+    )
+  fi
+
+  # delete the download path with -f. I noticed there are some files that it
+  # will prompt you to delete. This avoids that.
+  rm -rf "$download_path"
+}
+
+install_keycloak "$ASDF_INSTALL_TYPE" "$ASDF_DOWNLOAD_PATH" "$ASDF_INSTALL_PATH"
