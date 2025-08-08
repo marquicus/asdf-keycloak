@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -x
+
 download_path() {
   local version=$1
   local tmp_download_dir=$2
