@@ -28,9 +28,9 @@ Check asdf readme for instructions on how to install & manage versions of keyclo
 Useful for performing [management tasks](https://www.keycloak.org/docs/latest/server_admin/index.html#admin-cli) with different keycloak versions
 
 ```bash
-# keycloak <25.x
+# keycloak <17.x
 kcadm.sh config credentials --server "https://my-keycloak/auth" --realm master --user admin
-# keycloak >25.x
+# keycloak >=17.x
 kcadm.sh config credentials --server "https://my-keycloak/" --realm master --user admin
 ```
 
